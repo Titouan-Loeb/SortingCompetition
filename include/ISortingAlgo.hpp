@@ -7,7 +7,7 @@ template <typename Num>
 class ISortingAlgo
 {
 protected:
-    virtual void run() = 0;
+    virtual std::vector<Num> run() = 0;
 public:
     ~ISortingAlgo() = default;
     virtual void sort(std::vector<Num> &array);

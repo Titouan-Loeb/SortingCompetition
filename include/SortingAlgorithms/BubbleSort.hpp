@@ -2,22 +2,21 @@
 #define BUBBLESORT_HPP
 
 #include "ASortingAlgo.hpp"
-#include <iostream> //TODO: remove
 
 template <typename Num>
 class BubbleSort : public ASortingAlgo<Num>
 {
+private:
+    std::vector<Num> run();
+
 public:
     BubbleSort(const std::vector<Num> &array);
     ~BubbleSort();
-    static void sort(std::vector<Num> &array)
+    static std::vector<Num> sort(std::vector<Num> &array)
     {
         BubbleSort<Num> algo(array);
-        algo.run();
+        return (algo.run());
     };
-
-private:
-    void run();
 };
 
 
@@ -36,7 +35,7 @@ BubbleSort<Num>::~BubbleSort()
 }
 
 template <typename Num>
-void BubbleSort<Num>::run()
+std::vector<Num> BubbleSort<Num>::run()
 {
     while (!this->isSorted()) {
         for (std::size_t i = 0; i < this->_array.size() - 1; i++) {
@@ -44,9 +43,7 @@ void BubbleSort<Num>::run()
                 std::swap(this->_array[i], this->_array[i + 1]);
         }
     }
-    for (std::size_t i = 0; i < this->_array.size(); i++)
-        std::cout << this->_array[i] << " ";
-    std::cout << std::endl;
+    return (this->_array);
 }
 
 #endif // BUBBLESORT_HPP
