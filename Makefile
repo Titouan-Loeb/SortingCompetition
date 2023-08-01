@@ -86,7 +86,7 @@ $(BUILD_DEBUG_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 all: build release debug
 
-full: fclean build release debug
+full: fclean all
 
 clean:
 	@echo "$(CYAN)Cleaning$(RESET) $(GREEN)build$(RESET) directory"
