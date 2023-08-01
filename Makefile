@@ -2,8 +2,8 @@
 CXX := g++
 # Flags for the compiler
 CXXFLAGS := -std=c++11 -Wall -Wextra
-CXXFLAGS_RELEASE := -O3
-CXXFLAGS_DEBUG := -g
+CXXFLAGS_RELEASE := $(CXXFLAGS) -O3
+CXXFLAGS_DEBUG := $(CXXFLAGS) -g
 
 # Directories
 SRC_DIR := src
@@ -47,13 +47,13 @@ build: clean $(TARGET)
 $(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR)
 	@echo "$(CYAN)Linking$(RESET) $(GREEN)$@$(RESET)"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $^ -o $@
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) $^ -o $@
 
 # Rule to build object files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
 	@echo "$(CYAN)Compiling$(RESET) $(GREEN)$<$(RESET)"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 # release: CXXFLAGS += $(CXXFLAGS_RELEASE)
 release: $(TARGET_RELEASE)
@@ -61,30 +61,32 @@ release: $(TARGET_RELEASE)
 # Rule to build the target in release mode
 $(TARGET_RELEASE): $(OBJECTS_RELEASE)
 	@mkdir -p $(BIN_DIR)
-	@echo "$(CYAN)Linking$(RESET) $(GREEN)$@$(RESET)"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $^ -o $@
+	@echo "$(CYAN)Linking --release$(RESET) $(GREEN)$@$(RESET)"
+	@$(CXX) $(CXXFLAGS_RELEASE) $(INCLUDES) $^ -o $@
 
 # Rule to build object files in release mode
 $(BUILD_RELEASE_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
-	@echo "$(CYAN)Compiling$(RESET) $(GREEN)$<$(RESET)"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "$(CYAN)Compiling --release$(RESET) $(GREEN)$<$(RESET)"
+	@$(CXX) $(CXXFLAGS_RELEASE) $(INCLUDES) -c $< -o $@
 
 debug: $(TARGET_DEBUG)
 
 # Rule to build the target in release mode
 $(TARGET_DEBUG): $(OBJECTS_DEBUG)
 	@mkdir -p $(BIN_DIR)
-	@echo "$(CYAN)Linking$(RESET) $(GREEN)$@$(RESET)"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $^ -o $@
+	@echo "$(CYAN)Linking --debug$(RESET) $(GREEN)$@$(RESET)"
+	@$(CXX) $(CXXFLAGS_DEBUG) $(INCLUDES) $^ -o $@
 
 # Rule to build object files
 $(BUILD_DEBUG_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
-	@echo "$(CYAN)Compiling$(RESET) $(GREEN)$<$(RESET)"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "$(CYAN)Compiling --debug$(RESET) $(GREEN)$<$(RESET)"
+	@$(CXX) $(CXXFLAGS_DEBUG) $(INCLUDES) -c $< -o $@
 
 all: build release debug
+
+full: fclean build release debug
 
 clean:
 	@echo "$(CYAN)Cleaning$(RESET) $(GREEN)build$(RESET) directory"
@@ -94,6 +96,6 @@ fclean: clean
 	@echo "$(CYAN)Cleaning$(RESET) $(GREEN)bin$(RESET) directory"
 	@rm -rf $(TARGET) $(BIN_DIR)
 
-re: fclean all
+re: fclean build
 
 .PHONY: all clean fclean re release debug
