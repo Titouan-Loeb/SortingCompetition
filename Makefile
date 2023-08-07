@@ -1,7 +1,7 @@
 # Compiler and flags
 CXX := g++
 # Flags for the compiler
-CXXFLAGS := -std=c++11 -Wall -Wextra
+CXXFLAGS := -std=c++20 -Wall -Wextra
 CXXFLAGS_RELEASE := $(CXXFLAGS) -O3
 CXXFLAGS_DEBUG := $(CXXFLAGS) -g
 

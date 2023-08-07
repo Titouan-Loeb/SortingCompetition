@@ -16,7 +16,7 @@ private:
 public:
     PushToSortedList(const std::vector<Num> &array);
     ~PushToSortedList();
-    static std::vector<Num> sort(std::vector<Num> &array)
+    static std::vector<Num> sort(const std::vector<Num> &array)
     {
         PushToSortedList<Num> algo(array);
         return (algo.run());

@@ -44,7 +44,17 @@
         "ostream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "chrono": "cpp",
+        "ctime": "cpp",
+        "ratio": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "condition_variable": "cpp",
+        "map": "cpp",
+        "future": "cpp",
+        "mutex": "cpp"
     },
     "makefile.launchConfigurations": [
         {
@@ -52,5 +62,6 @@
             "binaryPath": "/home/titouanloeb/MY_REPOs/StupidSort/bin/SortingCompetion",
             "binaryArgs": []
         }
-    ]
+    ],
+    "C_Cpp.errorSquiggles": "enabled",
 }

@@ -12,7 +12,8 @@ private:
 public:
     BubbleSort(const std::vector<Num> &array);
     ~BubbleSort();
-    static std::vector<Num> sort(std::vector<Num> &array)
+    // static std::vector<Num> sort2(std::vector<Num> &array) {};
+    static std::vector<Num> sort(const std::vector<Num> &array)
     {
         BubbleSort<Num> algo(array);
         return (algo.run());

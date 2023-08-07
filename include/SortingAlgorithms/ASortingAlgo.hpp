@@ -1,7 +1,7 @@
 #ifndef ASORTINGALGO_HPP
 #define ASORTINGALGO_HPP
 
-#include "ISortingAlgo.hpp"
+#include "SortingAlgoStruct.hpp"
 
 template <typename Num>
 class ASortingAlgo // : public ISortingAlgo<Num>
