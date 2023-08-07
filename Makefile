@@ -4,6 +4,7 @@ CXX := g++
 CXXFLAGS := -std=c++20 -Wall -Wextra
 CXXFLAGS_RELEASE := $(CXXFLAGS) -O3
 CXXFLAGS_DEBUG := $(CXXFLAGS) -g
+CRITERION_FLAGS := -lcriterion
 
 # Directories
 SRC_DIR := src
@@ -12,8 +13,9 @@ BASE_BUILD_DIR := build
 BUILD_DIR := $(BASE_BUILD_DIR)/obj
 BUILD_RELEASE_DIR := $(BASE_BUILD_DIR)/release
 BUILD_DEBUG_DIR := $(BASE_BUILD_DIR)/debug
+BUILD_TEST_DIR := $(BASE_BUILD_DIR)/test
 BIN_DIR := bin
-TESTDIR := test
+TEST_DIR := test
 
 # Target executable names
 BIN_NAME := SortingCompetion
@@ -26,12 +28,15 @@ TARGET_TEST := $(BIN_DIR)/$(BIN_NAME)-test
 SOURCES := $(shell find $(SRC_DIR) -type f -name "*.cpp")
 
 # Find all source files in the src directory and its subdirectories
-TESTS := $(shell find $(TESTDIR) -type f -name "*.cpp")
+TESTS := $(shell find $(TEST_DIR) -type f -name "*.cpp")
+TEST_SOURCES := $(filter-out $(SRC_DIR)/Main.cpp, $(SOURCES))
 
 # Derive object file names from source file names and place them in the build directory
 OBJECTS := $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(SOURCES:.cpp=.o))
 OBJECTS_RELEASE := $(patsubst $(SRC_DIR)/%,$(BUILD_RELEASE_DIR)/%,$(SOURCES:.cpp=.o))
 OBJECTS_DEBUG := $(patsubst $(SRC_DIR)/%,$(BUILD_DEBUG_DIR)/%,$(SOURCES:.cpp=.o))
+OBJECTS_TEST_SOURCES := $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(TEST_SOURCES:.cpp=.o))
+OBJECTS_TEST := $(patsubst $(TEST_DIR)/%,$(BUILD_TEST_DIR)/%,$(TESTS:.cpp=.o))
 
 # Include directories for header files (including subdirectories)
 INCLUDES := -I$(INC_DIR) $(shell find $(INC_DIR) -type d | sed 's/^/-I/')
@@ -84,6 +89,23 @@ $(BUILD_DEBUG_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo "$(CYAN)Compiling --debug$(RESET) $(GREEN)$<$(RESET)"
 	@$(CXX) $(CXXFLAGS_DEBUG) $(INCLUDES) -c $< -o $@
 
+# Rule to build and run tests
+test: $(TARGET_TEST)
+	@echo "$(CYAN)Running tests$(RESET)"
+	@./$(TARGET_TEST)
+
+# Rule to build the test executable
+$(TARGET_TEST): $(OBJECTS_TEST_SOURCES) $(OBJECTS_TEST)
+	@mkdir -p $(BIN_DIR)
+	@echo "$(CYAN)Linking tests$(RESET) $(GREEN)$@$(RESET)"
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) $(CRITERION_FLAGS) $^ -o $@
+
+# Rule to build object files for tests
+$(BUILD_TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
+	@mkdir -p $(@D)
+	@echo "$(CYAN)Compiling test$(RESET) $(GREEN)$<$(RESET)"
+	@$(CXX) $(CXXFLAGS) $(CRITERION_FLAGS) $(INCLUDES) -c $< -o $@
+
 all: build release debug
 
 full: fclean all
@@ -110,4 +132,4 @@ run-debug:
 	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET_DEBUG)$(RESET)"
 	@valgrind $(TARGET_DEBUG)
 
-.PHONY: all clean fclean re release debug
+.PHONY: build release debug test all full clean fclean re run run-release run-debug
