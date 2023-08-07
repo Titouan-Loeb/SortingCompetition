@@ -17,7 +17,7 @@ jobs:
       name: build-project
       run: make build
 
-      name: build-project-release
+      name: release
       run: make release
 
     # - name: configure
