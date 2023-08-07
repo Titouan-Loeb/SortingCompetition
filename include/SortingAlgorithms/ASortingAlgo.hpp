@@ -1,10 +1,10 @@
 #ifndef ASORTINGALGO_HPP
 #define ASORTINGALGO_HPP
 
-#include "SortingAlgoStruct.hpp"
+#include <vector>
 
 template <typename Num>
-class ASortingAlgo // : public ISortingAlgo<Num>
+class ASortingAlgo
 {
 protected:
     std::vector<Num> _array;
@@ -34,8 +34,8 @@ ASortingAlgo<Num>::~ASortingAlgo()
 template <typename Num>
 bool ASortingAlgo<Num>::isSorted()
 {
-    for (std::size_t i = 0; i < this->_array.size() - 1; i++)
-        if (this->_array[i] > this->_array[i + 1])
+    for (size_t i = 1; i < this->_array.size(); i++)
+        if (this->_array[i - 1] > this->_array[i])
             return (false);
     return (true);
 }

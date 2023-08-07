@@ -1,15 +1,12 @@
 #ifndef CHALLENGER_HPP
 #define CHALLENGER_HPP
 
-#include <vector>
 #include <map>
-#include <mutex>
 
 #include "BubbleSort.hpp"
 #include "PushToSortedList.hpp"
-#include "SortingAlgoStruct.hpp"
-#include "ThreadWrapper.hpp"
 #include "Mutex.hpp"
+#include "SortingAlgoStruct.hpp"
 
 template <typename Num>
 static void printArray(const std::string &algoName, const std::vector<Num> &array)
@@ -27,14 +24,10 @@ template <typename Num>
 class Challenger
 {
 private:
-    // const std::vector<AlgoInfoStruct<Num>> _algoStructList = {
-    //     { SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sort },
-    //     { SortAlgoFlags::PUSH_TO_SORTED_LIST, "PushToSortedList", &PushToSortedList<Num>::sort },
-    // };
     std::vector<AlgoInfoStruct<Num>> _algoStructList;
     std::map<SortAlgoFlags, AlgoPrototype<Num>> _functionPointers;
     std::vector<Num> _competitionArray;
-    std::vector<ThreadWrapper<Num>> _competitionThreads;
+    std::vector<std::thread> _threads;
 public:
     Challenger(const std::vector<Num> &competitionArray);
     ~Challenger();
@@ -51,8 +44,6 @@ template <typename Num>
 Challenger<Num>::Challenger(const std::vector<Num> &competitionArray)
 {
     this->_algoStructList.push_back({ SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sort });
-    std::vector<Num> res = BubbleSort<Num>::sort({12, -5, 1});
-    printArray<Num>("test", res);
     this->_algoStructList.push_back({ SortAlgoFlags::PUSH_TO_SORTED_LIST, "PushToSortedList", &PushToSortedList<Num>::sort });
     this->_competitionArray = competitionArray;
     for (size_t i = 0; i < this->_algoStructList.size(); i++)
@@ -63,17 +54,33 @@ template <typename Num>
 Challenger<Num>::~Challenger()
 {
     this->_competitionArray.clear();
-    this->_competitionThreads.clear();
+    this->_threads.clear();
 }
 
 template <typename Num>
 void Challenger<Num>::challengeAll()
 {
-    ThreadWrapper<Num> test({ SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sort }, {10, -7, 1});
-    test.launchThread();
-    test.joinThread();
-    for (size_t i = 0; i < this->_algoStructList.size(); i++)
-        this->_competitionThreads.push_back(ThreadWrapper<Num>({ SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sort }, {10, -7, 1}));
+    for (size_t i = 0; i < this->_algoStructList.size(); i++) {
+        std::vector<Num> competitionArrayCopy = this->_competitionArray;
+        AlgoInfoStruct<Num> algoInfoCopy = this->_algoStructList[i];
+        this->_threads.push_back(std::thread([&, competitionArrayCopy, algoInfoCopy]() mutable {
+            auto startTime = std::chrono::steady_clock::now();
+            std::vector<Num> resultList = algoInfoCopy.func(competitionArrayCopy);
+            auto endTime = std::chrono::steady_clock::now();
+            std::chrono::duration<double> duration = endTime - startTime;
+            std::lock_guard<std::mutex> lock(synchronizer);
+            std::cout << algoInfoCopy.name << " " << duration.count() << "s : { ";
+            for (size_t i = 0; i < resultList.size(); i++) {
+                if (i == 0)
+                    std::cout << resultList[i];
+                else
+                    std::cout << " < " << resultList[i];
+            }
+            std::cout << " }" << std::endl;
+        }));
+    }
+    for (size_t i = 0; i < this->_threads.size(); i++)
+        this->_threads[i].join();
 }
 
 #endif // CHALLENGER_HPPThreadWrapper

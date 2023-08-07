@@ -98,4 +98,16 @@ fclean: clean
 
 re: fclean build
 
+run:
+	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET)$(RESET)"
+	@$(TARGET)
+
+run-release:
+	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET_RELEASE)$(RESET)"
+	@$(TARGET_RELEASE)
+
+run-debug:
+	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET_DEBUG)$(RESET)"
+	@valgrind $(TARGET_DEBUG)
+
 .PHONY: all clean fclean re release debug

@@ -15,10 +15,8 @@ int main(int argc, char** argv)
 {
     (void)argc;
     (void)argv;
-    std::mutex mutex;
-    std::vector<int> array = {5, 12, -1, 0, 2};
+    std::vector<int> array = {5, 12, -1, 0, 2, 8, 501, -66, 41, 9, 0, -8001};
     Challenger<int> chal(array);
     chal.challengeAll();
-    printArray<int>("PushToSortedList", PushToSortedList<int>::sort(array));
     return (0);
 }

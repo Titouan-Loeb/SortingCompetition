@@ -1,8 +1,6 @@
 #ifndef PUSHTOSORTEDLIST_HPP
 #define PUSHTOSORTEDLIST_HPP
 
-#include <vector>
-
 #include "ASortingAlgo.hpp"
 
 template <typename Num>
