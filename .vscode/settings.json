@@ -56,12 +56,5 @@
         "future": "cpp",
         "mutex": "cpp"
     },
-    "makefile.launchConfigurations": [
-        {
-            "cwd": "/home/titouanloeb/MY_REPOs/StupidSort/bin",
-            "binaryPath": "/home/titouanloeb/MY_REPOs/StupidSort/bin/SortingCompetion",
-            "binaryArgs": []
-        }
-    ],
     "C_Cpp.errorSquiggles": "enabled",
 }

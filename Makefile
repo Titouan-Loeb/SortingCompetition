@@ -1,3 +1,7 @@
+###############
+## Variables ##
+###############
+
 # Compiler and flags
 CXX := g++
 # Flags for the compiler
@@ -46,6 +50,12 @@ GREEN := \033[1;32m
 CYAN := \033[1;36m
 RESET := \033[0m
 
+
+#######################
+## Compilation rules ##
+#######################
+
+# Default rule
 build: clean $(TARGET)
 
 # Rule to build the target
@@ -59,6 +69,20 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
 	@echo "$(CYAN)Compiling$(RESET) $(GREEN)$<$(RESET)"
 	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+debug: $(TARGET_DEBUG)
+
+# Rule to build the target in release mode
+$(TARGET_DEBUG): $(OBJECTS_DEBUG)
+	@mkdir -p $(BIN_DIR)
+	@echo "$(CYAN)Linking --debug$(RESET) $(GREEN)$@$(RESET)"
+	@$(CXX) $(CXXFLAGS_DEBUG) $(INCLUDES) $^ -o $@
+
+# Rule to build object files
+$(BUILD_DEBUG_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(@D)
+	@echo "$(CYAN)Compiling --debug$(RESET) $(GREEN)$<$(RESET)"
+	@$(CXX) $(CXXFLAGS_DEBUG) $(INCLUDES) -c $< -o $@
 
 # release: CXXFLAGS += $(CXXFLAGS_RELEASE)
 release: $(TARGET_RELEASE)
@@ -74,20 +98,6 @@ $(BUILD_RELEASE_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
 	@echo "$(CYAN)Compiling --release$(RESET) $(GREEN)$<$(RESET)"
 	@$(CXX) $(CXXFLAGS_RELEASE) $(INCLUDES) -c $< -o $@
-
-debug: $(TARGET_DEBUG)
-
-# Rule to build the target in release mode
-$(TARGET_DEBUG): $(OBJECTS_DEBUG)
-	@mkdir -p $(BIN_DIR)
-	@echo "$(CYAN)Linking --debug$(RESET) $(GREEN)$@$(RESET)"
-	@$(CXX) $(CXXFLAGS_DEBUG) $(INCLUDES) $^ -o $@
-
-# Rule to build object files
-$(BUILD_DEBUG_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@mkdir -p $(@D)
-	@echo "$(CYAN)Compiling --debug$(RESET) $(GREEN)$<$(RESET)"
-	@$(CXX) $(CXXFLAGS_DEBUG) $(INCLUDES) -c $< -o $@
 
 # Rule to build and run tests
 test: $(TARGET_TEST)
@@ -106,30 +116,50 @@ $(BUILD_TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
 	@echo "$(CYAN)Compiling test$(RESET) $(GREEN)$<$(RESET)"
 	@$(CXX) $(CXXFLAGS) $(CRITERION_FLAGS) $(INCLUDES) -c $< -o $@
 
-all: build release debug test
+re: fclean build
+
+all: build debug release test
 
 full: fclean all
 
+
+####################
+## Cleaning rules ##
+####################
+
+# Clean the build directory
 clean:
 	@echo "$(CYAN)Cleaning$(RESET) $(GREEN)build$(RESET) directory"
 	@rm -rf $(BASE_BUILD_DIR)
 
+# Clean the build directory and the bin directory
 fclean: clean
 	@echo "$(CYAN)Cleaning$(RESET) $(GREEN)bin$(RESET) directory"
 	@rm -rf $(TARGET) $(BIN_DIR)
 
-re: fclean build
 
+###################
+## Running rules ##
+###################
+
+# Run the program
 run:
 	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET)$(RESET)"
 	@$(TARGET)
 
-run-release:
-	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET_RELEASE)$(RESET)"
-	@$(TARGET_RELEASE)
-
+# Run in debug mode
 run-debug:
-	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET_DEBUG)$(RESET)"
+	@echo "$(CYAN)Running --debug$(RESET) $(GREEN)$(TARGET_DEBUG)$(RESET)"
 	@valgrind $(TARGET_DEBUG)
 
-.PHONY: build release debug test all full clean fclean re run run-release run-debug
+# Run in release mode
+run-release:
+	@echo "$(CYAN)Running --release$(RESET) $(GREEN)$(TARGET_RELEASE)$(RESET)"
+	@$(TARGET_RELEASE)
+
+# Run tests
+run-test:
+	@echo "$(CYAN)Running tests$(RESET) $(GREEN)$(TARGET_TEST)$(RESET)"
+	@$(TARGET_TEST)
+
+.PHONY: build debug release test all full clean fclean re run run-release run-debug run-test

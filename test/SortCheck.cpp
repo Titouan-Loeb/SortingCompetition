@@ -2,8 +2,6 @@
 #include <BubbleSort.hpp>
 #include "PushToSortedList.hpp"
 
-
-
 // TestSuite(algoTest, .init=setup);
 
 bool compareLists(std::vector<int> array, std::vector<int> arraySorted)
