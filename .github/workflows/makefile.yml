@@ -26,5 +26,17 @@ jobs:
     - name: build-release
       run: make release
 
+    - name: run
+      run: make run
+  
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: configure
+      run: ./configure
+
     - name: test-project
       run: make test

@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/SortingCompetion-debug",
+            "program": "${workspaceFolder}/bin/${workspaceFolderBasename}-debug",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
