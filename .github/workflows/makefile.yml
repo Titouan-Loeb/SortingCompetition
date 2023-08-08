@@ -18,19 +18,13 @@ jobs:
       run: ./configure
 
     - name: build-project
-      run: make all
+      run: make build
+
+    - name: build-debug
+      run: make debug
+    
+    - name: build-release
+      run: make release
 
     - name: test-project
       run: make test
-
-    # - name: configure
-    #   run: ./configure
-
-    # - name: Install dependencies
-    #   run: make
-
-    # - name: Run check
-    #   run: make check
-
-    # - name: Run distcheck
-    #   run: make distcheck
