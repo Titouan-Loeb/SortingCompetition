@@ -56,7 +56,7 @@ RESET := \033[0m
 #######################
 
 # Default rule
-build: clean $(TARGET)
+build: $(TARGET)
 
 # Rule to build the target
 $(TARGET): $(OBJECTS)
