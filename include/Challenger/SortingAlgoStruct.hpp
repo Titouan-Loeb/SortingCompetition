@@ -10,8 +10,9 @@ using AlgoPrototype = std::vector<Num> (*)(const std::vector<Num>&);
 enum class SortAlgoFlags
 {
     BUBBLE_SORT = 0b1,
-    PUSH_TO_SORTED_LIST = 0b10,
-    MAX = 0b100,
+    INSERTION_SORT = 0b10,
+    SELECTION_SORT = 0b100,
+    MAX = 0b1000,
 };
 
 template <typename Num>

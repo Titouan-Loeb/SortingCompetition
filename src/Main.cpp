@@ -3,7 +3,7 @@
 #include <thread>
 
 #include "BubbleSort.hpp"
-#include "PushToSortedList.hpp"
+#include "InsertionSort.hpp"
 #include "Challenger.hpp"
 
 int main(int argc, char** argv)

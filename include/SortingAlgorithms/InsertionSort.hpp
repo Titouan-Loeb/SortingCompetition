@@ -1,10 +1,10 @@
-#ifndef PUSHTOSORTEDLIST_HPP
-#define PUSHTOSORTEDLIST_HPP
+#ifndef INSERTIONSORT_HPP
+#define INSERTIONSORT_HPP
 
 #include "ASortingAlgo.hpp"
 
 template <typename Num>
-class PushToSortedList : public ASortingAlgo<Num>
+class InsertionSort : public ASortingAlgo<Num>
 {
 private:
     std::vector<Num> _sortedList;
@@ -12,11 +12,11 @@ private:
     std::vector<Num> run();
 
 public:
-    PushToSortedList(const std::vector<Num> &array);
-    ~PushToSortedList();
+    InsertionSort(const std::vector<Num> &array);
+    ~InsertionSort();
     static std::vector<Num> sort(const std::vector<Num> &array)
     {
-        PushToSortedList<Num> algo(array);
+        InsertionSort<Num> algo(array);
         return (algo.run());
     };
 };
@@ -26,17 +26,17 @@ public:
 // ------------------------------
 
 template <typename Num>
-PushToSortedList<Num>::PushToSortedList(const std::vector<Num> &array) : ASortingAlgo<Num>(array)
+InsertionSort<Num>::InsertionSort(const std::vector<Num> &array) : ASortingAlgo<Num>(array)
 {
 }
 
 template <typename Num>
-PushToSortedList<Num>::~PushToSortedList()
+InsertionSort<Num>::~InsertionSort()
 {
 }
 
 template <typename Num>
-std::vector<Num> PushToSortedList<Num>::run()
+std::vector<Num> InsertionSort<Num>::run()
 {
     while (!this->_array.empty()) {
         if (this->_sortedList.empty()) {
@@ -61,4 +61,4 @@ std::vector<Num> PushToSortedList<Num>::run()
     return (this->_sortedList);
 }
 
-#endif // PUSHTOSORTEDLIST_HPP
+#endif // INSERTIONSORT_HPP

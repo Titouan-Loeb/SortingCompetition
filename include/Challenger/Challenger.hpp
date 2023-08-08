@@ -4,7 +4,8 @@
 #include <map>
 
 #include "BubbleSort.hpp"
-#include "PushToSortedList.hpp"
+#include "InsertionSort.hpp"
+#include "SelectionSort.hpp"
 #include "Mutex.hpp"
 #include "SortingAlgoStruct.hpp"
 
@@ -44,7 +45,8 @@ template <typename Num>
 Challenger<Num>::Challenger(const std::vector<Num> &competitionArray)
 {
     this->_algoStructList.push_back({ SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sort });
-    this->_algoStructList.push_back({ SortAlgoFlags::PUSH_TO_SORTED_LIST, "PushToSortedList", &PushToSortedList<Num>::sort });
+    this->_algoStructList.push_back({ SortAlgoFlags::INSERTION_SORT, "InsertionSort", &InsertionSort<Num>::sort });
+    this->_algoStructList.push_back({ SortAlgoFlags::SELECTION_SORT, "SelectionSort", &SelectionSort<Num>::sort });
     this->_competitionArray = competitionArray;
     for (size_t i = 0; i < this->_algoStructList.size(); i++)
         this->_functionPointers.insert(std::make_pair(this->_algoStructList[i].flag, this->_algoStructList[i].func));
