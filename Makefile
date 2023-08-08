@@ -92,7 +92,7 @@ $(BUILD_DEBUG_DIR)/%.o: $(SRC_DIR)/%.cpp
 # Rule to build and run tests
 test: $(TARGET_TEST)
 	@echo "$(CYAN)Running tests$(RESET)"
-	@./$(TARGET_TEST)
+	@./$(TARGET_TEST) --verbose
 
 # Rule to build the test executable
 $(TARGET_TEST): $(OBJECTS_TEST_SOURCES) $(OBJECTS_TEST)
@@ -106,7 +106,7 @@ $(BUILD_TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
 	@echo "$(CYAN)Compiling test$(RESET) $(GREEN)$<$(RESET)"
 	@$(CXX) $(CXXFLAGS) $(CRITERION_FLAGS) $(INCLUDES) -c $< -o $@
 
-all: build release debug
+all: build release debug test
 
 full: fclean all
 
