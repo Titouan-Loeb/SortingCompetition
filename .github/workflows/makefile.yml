@@ -25,3 +25,6 @@ jobs:
     
     - name: build-release
       run: make release
+
+    - name: run
+      run: make run
