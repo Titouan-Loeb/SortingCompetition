@@ -28,3 +28,12 @@ jobs:
 
     - name: run
       run: make run
+  
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: test-project
+      run: make test
