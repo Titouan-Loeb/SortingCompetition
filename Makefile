@@ -22,7 +22,7 @@ BIN_DIR := bin
 TEST_DIR := test
 
 # Target executable names
-BIN_NAME := SortingCompetion
+BIN_NAME := SortingCompetition
 TARGET := $(BIN_DIR)/$(BIN_NAME)
 TARGET_RELEASE := $(BIN_DIR)/$(BIN_NAME)-release
 TARGET_DEBUG := $(BIN_DIR)/$(BIN_NAME)-debug

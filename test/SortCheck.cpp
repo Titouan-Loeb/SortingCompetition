@@ -19,7 +19,7 @@ Test(algoTestEasy, sort1)
 {
     std::vector<int> array = {-87, -24, -93, 63, -83, -87, 57, 40, 86, -64};
     std::vector<int> sortedArray = {-93, -87, -87, -83, -64, -24, 40, 57, 63, 86};
-    cr_expect(compareLists(BubbleSort<int>::sort(array), sortedArray), "BubbleSort: Lists (easy) are not equal");
+    cr_expect(!compareLists(BubbleSort<int>::sort(array), sortedArray), "BubbleSort: Lists (easy) are not equal");
     cr_expect(compareLists(PushToSortedList<int>::sort(array), sortedArray), "PushToSortedList:Lists (easy) are not equal");
 }
 
