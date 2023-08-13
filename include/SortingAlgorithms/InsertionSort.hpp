@@ -3,6 +3,7 @@
 
 #include "ASortingAlgo.hpp"
 #include "CustomException.hpp"
+#include "Mutex.hpp"
 
 template <typename Num>
 class InsertionSort : public ASortingAlgo<Num>
