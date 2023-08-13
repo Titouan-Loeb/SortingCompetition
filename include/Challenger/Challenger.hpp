@@ -6,29 +6,19 @@
 #include "BubbleSort.hpp"
 #include "InsertionSort.hpp"
 #include "SelectionSort.hpp"
+#include "CocktailShakerSort.hpp"
 #include "Mutex.hpp"
 #include "SortingAlgoStruct.hpp"
-
-template <typename Num>
-static void printArray(const std::string &algoName, const std::vector<Num> &array)
-{
-    std::cout << algoName << " : "; 
-    for (size_t i = 0; i < array.size(); i++) {
-        if (i + 1 < array.size())
-            std::cout << array[i] << ", ";
-        else
-            std::cout << array[i] << std::endl;
-    }
-}
 
 template <typename Num>
 class Challenger
 {
 private:
-    std::vector<AlgoInfoStruct<Num>> _algoStructList;
-    std::map<SortAlgoFlags, AlgoPrototype<Num>> _functionPointers;
     std::vector<Num> _competitionArray;
+    std::vector<AlgoInfoStruct<Num>> _algoStructList;
     std::vector<std::thread> _threads;
+    size_t _place;
+
 public:
     Challenger(const std::vector<Num> &competitionArray);
     ~Challenger();
@@ -44,12 +34,12 @@ public:
 template <typename Num>
 Challenger<Num>::Challenger(const std::vector<Num> &competitionArray)
 {
-    this->_algoStructList.push_back({ SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sort });
-    this->_algoStructList.push_back({ SortAlgoFlags::INSERTION_SORT, "InsertionSort", &InsertionSort<Num>::sort });
-    this->_algoStructList.push_back({ SortAlgoFlags::SELECTION_SORT, "SelectionSort", &SelectionSort<Num>::sort });
+    this->_place = 0;
+    this->_algoStructList.push_back({ SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sortWithTimeout });
+    this->_algoStructList.push_back({ SortAlgoFlags::INSERTION_SORT, "InsertionSort", &InsertionSort<Num>::sortWithTimeout });
+    this->_algoStructList.push_back({ SortAlgoFlags::SELECTION_SORT, "SelectionSort", &SelectionSort<Num>::sortWithTimeout });
+    this->_algoStructList.push_back({ SortAlgoFlags::COCKTAIL_SHAKER_SORT, "CocktailShakerSort", &CocktailShakerSort<Num>::sortWithTimeout });
     this->_competitionArray = competitionArray;
-    for (size_t i = 0; i < this->_algoStructList.size(); i++)
-        this->_functionPointers.insert(std::make_pair(this->_algoStructList[i].flag, this->_algoStructList[i].func));
 }
 
 template <typename Num>
@@ -67,18 +57,11 @@ void Challenger<Num>::challengeAll()
         AlgoInfoStruct<Num> algoInfoCopy = this->_algoStructList[i];
         this->_threads.push_back(std::thread([&, competitionArrayCopy, algoInfoCopy]() mutable {
             auto startTime = std::chrono::steady_clock::now();
-            std::vector<Num> resultList = algoInfoCopy.func(competitionArrayCopy);
+            std::vector<Num> resultList = algoInfoCopy.func(competitionArrayCopy, timeout);
             auto endTime = std::chrono::steady_clock::now();
             std::chrono::duration<double> duration = endTime - startTime;
             std::lock_guard<std::mutex> lock(synchronizer);
-            std::cout << algoInfoCopy.name << " " << duration.count() << "s : { ";
-            for (size_t i = 0; i < resultList.size(); i++) {
-                if (i == 0)
-                    std::cout << resultList[i];
-                else
-                    std::cout << " < " << resultList[i];
-            }
-            std::cout << " }" << std::endl;
+            std::cout << ++this->_place << ". " << algoInfoCopy.name << " -> " << duration.count() << "s" << std::endl;
         }));
     }
     for (size_t i = 0; i < this->_threads.size(); i++)
