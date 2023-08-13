@@ -57,7 +57,7 @@ std::vector<Num> BubbleSort<Num>::run()
 template <typename Num>
 std::vector<Num> BubbleSort<Num>::runWithTimeout(const std::atomic<bool> &timeout)
 {
-    while (!timeout && !this->isSorted()) {
+    while (!timeout.load() && !this->isSorted()) {
         for (std::size_t i = 0; i < this->_array.size() - 1; i++) {
             if (this->_array[i] > this->_array[i + 1])
                 std::swap(this->_array[i], this->_array[i + 1]);

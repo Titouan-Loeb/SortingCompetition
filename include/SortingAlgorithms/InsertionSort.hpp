@@ -73,7 +73,7 @@ std::vector<Num> InsertionSort<Num>::run()
 template <typename Num>
 std::vector<Num> InsertionSort<Num>::runWithTimeout(const std::atomic<bool> &timeout)
 {
-    while (!timeout && !this->_array.empty()) {
+    while (!timeout.load() && !this->_array.empty()) {
         if (this->_sortedList.empty()) {
             this->_sortedList.push_back(this->_array[0]);
         } else {

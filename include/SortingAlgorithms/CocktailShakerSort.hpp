@@ -68,7 +68,7 @@ std::vector<Num> CocktailShakerSort<Num>::run()
 template <typename Num>
 std::vector<Num> CocktailShakerSort<Num>::runWithTimeout(const std::atomic<bool> &timeout)
 {
-    while (!timeout && this->_minIndex < this->_maxIndex) {
+    while (!timeout.load() && this->_minIndex < this->_maxIndex) {
         size_t minIndex = findMinIndex();
         std::swap(this->_array[this->_minIndex], this->_array[minIndex]);        
         this->_minIndex++;

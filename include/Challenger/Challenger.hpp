@@ -57,13 +57,22 @@ void Challenger<Num>::challengeAll()
         AlgoInfoStruct<Num> algoInfoCopy = this->_algoStructList[i];
         this->_threads.push_back(std::thread([&, competitionArrayCopy, algoInfoCopy]() mutable {
             auto startTime = std::chrono::steady_clock::now();
-            std::vector<Num> resultList = algoInfoCopy.func(competitionArrayCopy, timeout);
+            try {
+                std::vector<Num> resultList = algoInfoCopy.func(competitionArrayCopy, timeout);
+            } catch (const std::exception &e) {
+                std::lock_guard<std::mutex> lock(synchronizer);
+                std::cout << algoInfoCopy.name << " -> DNF" << std::endl;
+                return;
+            }
             auto endTime = std::chrono::steady_clock::now();
             std::chrono::duration<double> duration = endTime - startTime;
             std::lock_guard<std::mutex> lock(synchronizer);
             std::cout << ++this->_place << ". " << algoInfoCopy.name << " -> " << duration.count() << "s" << std::endl;
         }));
     }
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    timeout.store(true);
+    std::cout << "------------- TIME OUT -------------" << std::endl;
     for (size_t i = 0; i < this->_threads.size(); i++)
         this->_threads[i].join();
 }

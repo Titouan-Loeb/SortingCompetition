@@ -60,7 +60,7 @@ std::vector<Num> SelectionSort<Num>::run()
 template <typename Num>
 std::vector<Num> SelectionSort<Num>::runWithTimeout(const std::atomic<bool> &timeout)
 {
-    while (!timeout && this->_currentIndex < this->_array.size()) {
+    while (!timeout.load() && this->_currentIndex < this->_array.size()) {
         size_t minIndex = findMinIndex();
         std::swap(this->_array[this->_currentIndex], this->_array[minIndex]);
         this->_currentIndex++;

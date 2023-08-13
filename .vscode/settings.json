@@ -54,7 +54,11 @@
         "condition_variable": "cpp",
         "map": "cpp",
         "future": "cpp",
-        "mutex": "cpp"
+        "mutex": "cpp",
+        "complex": "cpp",
+        "cstring": "cpp",
+        "sstream": "cpp",
+        "cinttypes": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled",
 }
