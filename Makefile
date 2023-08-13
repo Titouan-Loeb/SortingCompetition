@@ -160,6 +160,6 @@ run-release:
 # Run tests
 run-test:
 	@echo "$(CYAN)Running tests$(RESET) $(GREEN)$(TARGET_TEST)$(RESET)"
-	@$(TARGET_TEST)
+	@$(TARGET_TEST) --verbose
 
 .PHONY: build debug release test all full clean fclean re run run-release run-debug run-test

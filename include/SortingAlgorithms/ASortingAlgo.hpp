@@ -8,7 +8,10 @@ class ASortingAlgo
 {
 protected:
     std::vector<Num> _array;
+
     virtual bool isSorted() final;
+    virtual std::vector<Num> run() = 0;
+    virtual std::vector<Num> runWithTimeout(const std::atomic<bool> &timeout) = 0;
 
 public:
     ASortingAlgo(const std::vector<Num> &array);

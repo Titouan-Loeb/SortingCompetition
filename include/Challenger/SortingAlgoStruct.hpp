@@ -5,14 +5,15 @@
 #include <string>
 
 template <typename Num>
-using AlgoPrototype = std::vector<Num> (*)(const std::vector<Num>&);
+using AlgoPrototype = std::vector<Num> (*)(const std::vector<Num>&, const std::atomic<bool> &);
 
 enum class SortAlgoFlags
 {
     BUBBLE_SORT = 0b1,
     INSERTION_SORT = 0b10,
     SELECTION_SORT = 0b100,
-    MAX = 0b1000,
+    COCKTAIL_SHAKER_SORT = 0b1000,
+    MAX = 0b10000,
 };
 
 template <typename Num>
