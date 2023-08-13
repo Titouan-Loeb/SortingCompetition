@@ -3,8 +3,7 @@
 The goal is to make a c++ class that competes various sorting algorithms against each other, the fastest wins. This project will work with any numerical type as it will be implemented using templates and each algorithm is independant so it can be used outside the competition. I also want to add stupid sorting algorithms for fun.
 
 ## Requirements
-
-To compile and execute this program you will need to have a cpp compiler (g++) and the command make installed as well. You might need to install valgrind as the rule "make run-debug" (explained in the running section) uses it. If you want to run the test you will need to have the criterion library installed.
+This project is compatible with c++20 and above. To compile and execute this program you will need to have a cpp compiler (g++) and the command make installed as well. You might need to install valgrind as the rule "make run-debug" (explained in the running section) uses it. If you want to run the test you will need to have the criterion library installed.
 
 ## Compiling
 
