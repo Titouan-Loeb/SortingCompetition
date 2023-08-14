@@ -1,22 +1,33 @@
 #include <string>
 #include <iostream>
-#include <thread>
 
 #include "Challenger.hpp"
 #include "MassiveArray.hpp"
-#include "ASortingAlgo.hpp"
+
+
+
+void printUsage(const std::string &binName)
+{
+    std::cout << "Usage: " << binName << "[-t timeout(ms)]" << std::endl;
+}
 
 int main(int argc, char** argv)
 {
-    if (argc == 2 && argv[1] == std::string("-h")) {
-        std::cout << "Usage: " << argv[0] << std::endl;
+    Challenger<int> chal(massiveArray);
+    
+    if (argc == 1) {
+        chal.challengeAll();;
         return (0);
     }
-    if (argc != 1) {
-        std::cout << "Usage: " << argv[0] << std::endl;
-        return (1);
+    if (argc == 2 && argv[1] == std::string("-h")) {
+        printUsage(argv[0]);
+        return (0);
     }
-    Challenger<int> chal(massiveArray);
-    chal.challengeAll();
-    return (0);
+    if (argc == 3 && argv[1] == std::string("-t")) {
+        int timeLimit = std::stoi(argv[2]);
+        chal.challengeAllWithTimeout(timeLimit);
+        return (0);
+    }
+    printUsage(argv[0]);
+    return (1);
 }

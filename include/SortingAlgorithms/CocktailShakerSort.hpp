@@ -14,8 +14,7 @@ private:
     size_t _maxIndex;
     size_t _minIndex;
 
-    std::vector<Num> run();
-    std::vector<Num> runWithTimeout(const std::atomic<bool> &timeout);
+    std::vector<Num> run(const std::atomic<bool> &timeout);
     size_t findMinIndex();
     size_t findMaxIndex();
 
@@ -26,13 +25,14 @@ public:
     static std::vector<Num> sort(const std::vector<Num> &array)
     {
         CocktailShakerSort<Num> algo(array);
-        return (algo.run());
+        std::atomic<bool> timeout(false);
+        return (algo.run(timeout));
     };
 
     static std::vector<Num> sortWithTimeout(const std::vector<Num> &array, const std::atomic<bool> &timeout)
     {
         CocktailShakerSort<Num> algo(array);
-        return (algo.runWithTimeout(timeout));
+        return (algo.run(timeout));
     };
 };
 
@@ -53,21 +53,7 @@ CocktailShakerSort<Num>::~CocktailShakerSort()
 }
 
 template <typename Num>
-std::vector<Num> CocktailShakerSort<Num>::run()
-{
-    while (this->_minIndex < this->_maxIndex) {
-        size_t minIndex = findMinIndex();
-        std::swap(this->_array[this->_minIndex], this->_array[minIndex]);        
-        this->_minIndex++;
-        size_t maxIndex = findMaxIndex();
-        std::swap(this->_array[this->_maxIndex], this->_array[maxIndex]);
-        this->_maxIndex--;
-    }
-    return (this->_array);
-}
-
-template <typename Num>
-std::vector<Num> CocktailShakerSort<Num>::runWithTimeout(const std::atomic<bool> &timeout)
+std::vector<Num> CocktailShakerSort<Num>::run(const std::atomic<bool> &timeout)
 {
     while (!timeout.load() && this->_minIndex < this->_maxIndex) {
         size_t minIndex = findMinIndex();

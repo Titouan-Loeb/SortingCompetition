@@ -5,7 +5,10 @@
 #include <string>
 
 template <typename Num>
-using AlgoPrototype = std::vector<Num> (*)(const std::vector<Num>&, const std::atomic<bool> &);
+using AlgoPrototypeWithTimeout = std::vector<Num> (*)(const std::vector<Num>&, const std::atomic<bool> &);
+
+template <typename Num>
+using AlgoPrototype = std::vector<Num> (*)(const std::vector<Num>&);
 
 enum class SortAlgoFlags
 {
@@ -21,7 +24,7 @@ struct AlgoInfoStruct
 {
     SortAlgoFlags flag;
     std::string name;
-    AlgoPrototype<Num> func;
+    AlgoPrototypeWithTimeout<Num> funcTimeout;
 };
 
 #endif // ISORTINGALGO_HPP

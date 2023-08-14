@@ -2,6 +2,7 @@
 #define CHALLENGER_HPP
 
 #include <map>
+#include <thread>
 
 #include "BubbleSort.hpp"
 #include "InsertionSort.hpp"
@@ -16,7 +17,7 @@ class Challenger
 private:
     std::vector<Num> _competitionArray;
     std::vector<AlgoInfoStruct<Num>> _algoStructList;
-    std::vector<std::thread> _threads;
+    std::vector<std::jthread> _threads;
     size_t _place;
 
 public:
@@ -24,7 +25,9 @@ public:
     ~Challenger();
 
     void challengeAll();
+    void challengeAllWithTimeout(const int &timeLimit);
     void challengeSpecific(SortAlgoFlags algoFlags);
+    void challengeSpecificWithTimeout(SortAlgoFlags algoFlags);
 };
 
 // ------------------------------
@@ -55,10 +58,10 @@ void Challenger<Num>::challengeAll()
     for (size_t i = 0; i < this->_algoStructList.size(); i++) {
         std::vector<Num> competitionArrayCopy = this->_competitionArray;
         AlgoInfoStruct<Num> algoInfoCopy = this->_algoStructList[i];
-        this->_threads.push_back(std::thread([&, competitionArrayCopy, algoInfoCopy]() mutable {
+        this->_threads.push_back(std::jthread([&, competitionArrayCopy, algoInfoCopy]() mutable {
             auto startTime = std::chrono::steady_clock::now();
             try {
-                std::vector<Num> resultList = algoInfoCopy.func(competitionArrayCopy, timeout);
+                std::vector<Num> resultList = algoInfoCopy.funcTimeout(competitionArrayCopy, timeout);
             } catch (const std::exception &e) {
                 std::lock_guard<std::mutex> lock(synchronizer);
                 std::cout << algoInfoCopy.name << " -> DNF" << std::endl;
@@ -70,11 +73,38 @@ void Challenger<Num>::challengeAll()
             std::cout << ++this->_place << ". " << algoInfoCopy.name << " -> " << duration.count() << "s" << std::endl;
         }));
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    for (size_t i = 0; i < this->_threads.size(); i++)
+        if (this->_threads[i].joinable())
+            this->_threads[i].join();
+}
+
+template <typename Num>
+void Challenger<Num>::challengeAllWithTimeout(const int &timeLimit)
+{
+    for (size_t i = 0; i < this->_algoStructList.size(); i++) {
+        std::vector<Num> competitionArrayCopy = this->_competitionArray;
+        AlgoInfoStruct<Num> algoInfoCopy = this->_algoStructList[i];
+        this->_threads.push_back(std::jthread([&, competitionArrayCopy, algoInfoCopy]() mutable {
+            auto startTime = std::chrono::steady_clock::now();
+            try {
+                std::vector<Num> resultList = algoInfoCopy.funcTimeout(competitionArrayCopy, timeout);
+            } catch (const std::exception &e) {
+                std::lock_guard<std::mutex> lock(synchronizer);
+                std::cout << algoInfoCopy.name << " -> DNF" << std::endl;
+                return;
+            }
+            auto endTime = std::chrono::steady_clock::now();
+            std::chrono::duration<double> duration = endTime - startTime;
+            std::lock_guard<std::mutex> lock(synchronizer);
+            std::cout << ++this->_place << ". " << algoInfoCopy.name << " -> " << duration.count() << "s" << std::endl;
+        }));
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(timeLimit));
     timeout.store(true);
     std::cout << "------------- TIME OUT -------------" << std::endl;
     for (size_t i = 0; i < this->_threads.size(); i++)
-        this->_threads[i].join();
+        if (this->_threads[i].joinable())
+            this->_threads[i].join();
 }
 
 #endif // CHALLENGER_HPPThreadWrapper

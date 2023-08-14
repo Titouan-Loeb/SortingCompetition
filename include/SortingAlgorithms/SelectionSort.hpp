@@ -11,8 +11,7 @@ class SelectionSort : public ASortingAlgo<Num>
 private:
     size_t _currentIndex;
 
-    std::vector<Num> run();
-    std::vector<Num> runWithTimeout(const std::atomic<bool> &timeout);
+    std::vector<Num> run(const std::atomic<bool> &timeout);
     size_t findMinIndex();
 
 public:
@@ -22,13 +21,14 @@ public:
     static std::vector<Num> sort(const std::vector<Num> &array)
     {
         SelectionSort<Num> algo(array);
-        return (algo.run());
+        std::atomic<bool> timeout(false);
+        return (algo.run(timeout));
     };
 
     static std::vector<Num> sortWithTimeout(const std::vector<Num> &array, const std::atomic<bool> &timeout)
     {
         SelectionSort<Num> algo(array);
-        return (algo.runWithTimeout(timeout));
+        return (algo.run(timeout));
     };
 };
 
@@ -48,18 +48,7 @@ SelectionSort<Num>::~SelectionSort()
 }
 
 template <typename Num>
-std::vector<Num> SelectionSort<Num>::run()
-{
-    while (this->_currentIndex < this->_array.size()) {
-        size_t minIndex = findMinIndex();
-        std::swap(this->_array[this->_currentIndex], this->_array[minIndex]);
-        this->_currentIndex++;
-    }
-    return (this->_array);
-}
-
-template <typename Num>
-std::vector<Num> SelectionSort<Num>::runWithTimeout(const std::atomic<bool> &timeout)
+std::vector<Num> SelectionSort<Num>::run(const std::atomic<bool> &timeout)
 {
     while (!timeout.load() && this->_currentIndex < this->_array.size()) {
         size_t minIndex = findMinIndex();
