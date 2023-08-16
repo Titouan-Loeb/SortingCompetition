@@ -145,7 +145,7 @@ fclean: clean
 # Run the program
 run:
 	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET)$(RESET)"
-	@$(TARGET)
+	@$(TARGET) -t 5000
 
 # Run in debug mode
 run-debug:
