@@ -42,9 +42,6 @@ int main(int argc, char** argv)
 
 // int main()
 // {
-//     std::vector<int> stupid = {4, 1 , 3, 2};
-//     std::vector<int> result = DoubleSelectionSort<int>::sort(stupid);
-//     printArray(result);
-
-//     Challenger<int> chal(massiveArray)
+//     Challenger<int> chal(massiveArray);
+//     chal.challengeSpecificWithTimeout((uint32_t)SortAlgoFlags::DOUBLE_SELECTION_SORT | (uint32_t)SortAlgoFlags::SELECTION_SORT, 500);
 // }
