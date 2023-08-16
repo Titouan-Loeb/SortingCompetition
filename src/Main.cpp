@@ -8,7 +8,7 @@
 
 void printUsage(const std::string &binName)
 {
-    std::cout << "Usage: " << binName << "[-t timeout(ms)]" << std::endl;
+    std::cout << "Usage: " << binName << " [-t timeout(ms)]" << std::endl;
 }
 
 int main(int argc, char** argv)

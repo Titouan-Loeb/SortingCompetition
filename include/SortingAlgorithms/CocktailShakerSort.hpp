@@ -19,8 +19,12 @@ private:
     size_t findMaxIndex();
 
 public:
-    CocktailShakerSort(const std::vector<Num> &array);
-    ~CocktailShakerSort();
+    CocktailShakerSort(const std::vector<Num> &array) : ASortingAlgo<Num>(array)
+    {
+        this->_minIndex = 0;
+        this->_maxIndex = this->_array.size() - 1;
+    };
+    ~CocktailShakerSort() {};
     
     static std::vector<Num> sort(const std::vector<Num> &array)
     {
@@ -39,18 +43,6 @@ public:
 // ------------------------------
 // IMPLEMENTATION
 // ------------------------------
-
-template <typename Num>
-CocktailShakerSort<Num>::CocktailShakerSort(const std::vector<Num> &array) : ASortingAlgo<Num>(array)
-{
-    this->_minIndex = 0;
-    this->_maxIndex = this->_array.size() - 1;
-}
-
-template <typename Num>
-CocktailShakerSort<Num>::~CocktailShakerSort()
-{
-}
 
 template <typename Num>
 std::vector<Num> CocktailShakerSort<Num>::run(const std::atomic<bool> &timeout)

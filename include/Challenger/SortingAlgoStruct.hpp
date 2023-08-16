@@ -16,7 +16,8 @@ enum class SortAlgoFlags
     INSERTION_SORT = 0b10,
     SELECTION_SORT = 0b100,
     COCKTAIL_SHAKER_SORT = 0b1000,
-    MAX = 0b10000,
+    BOGO_SORT = 0b10000,
+    MAX = 0b100000,
 };
 
 template <typename Num>
