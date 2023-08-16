@@ -14,8 +14,8 @@ private:
     std::vector<Num> run(const std::atomic<bool> &timeout);
 
 public:
-    InsertionSort(const std::vector<Num> &array);
-    ~InsertionSort();
+    InsertionSort(const std::vector<Num> &array) : ASortingAlgo<Num>(array) {};
+    ~InsertionSort() {};
     
     static std::vector<Num> sort(const std::vector<Num> &array)
     {
@@ -34,16 +34,6 @@ public:
 // ------------------------------
 // IMPLEMENTATION
 // ------------------------------
-
-template <typename Num>
-InsertionSort<Num>::InsertionSort(const std::vector<Num> &array) : ASortingAlgo<Num>(array)
-{
-}
-
-template <typename Num>
-InsertionSort<Num>::~InsertionSort()
-{
-}
 
 template <typename Num>
 std::vector<Num> InsertionSort<Num>::run(const std::atomic<bool> &timeout)

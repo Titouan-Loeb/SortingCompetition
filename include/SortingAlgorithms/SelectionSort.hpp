@@ -15,8 +15,11 @@ private:
     size_t findMinIndex();
 
 public:
-    SelectionSort(const std::vector<Num> &array);
-    ~SelectionSort();
+    SelectionSort(const std::vector<Num> &array) : ASortingAlgo<Num>(array)
+    {
+        this->_currentIndex = 0;
+    };
+    ~SelectionSort() {};
     
     static std::vector<Num> sort(const std::vector<Num> &array)
     {
@@ -35,17 +38,6 @@ public:
 // ------------------------------
 // IMPLEMENTATION
 // ------------------------------
-
-template <typename Num>
-SelectionSort<Num>::SelectionSort(const std::vector<Num> &array) : ASortingAlgo<Num>(array)
-{
-    this->_currentIndex = 0;
-}
-
-template <typename Num>
-SelectionSort<Num>::~SelectionSort()
-{
-}
 
 template <typename Num>
 std::vector<Num> SelectionSort<Num>::run(const std::atomic<bool> &timeout)
