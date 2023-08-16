@@ -10,7 +10,7 @@ using AlgoPrototypeWithTimeout = std::vector<Num> (*)(const std::vector<Num>&, c
 template <typename Num>
 using AlgoPrototype = std::vector<Num> (*)(const std::vector<Num>&);
 
-enum class SortAlgoFlags : size_t
+enum class SortAlgoFlags : uint32_t
 {
     BUBBLE_SORT = 0b1,
     INSERTION_SORT = 0b10,
@@ -18,6 +18,7 @@ enum class SortAlgoFlags : size_t
     COCKTAIL_SHAKER_SORT = 0b1000,
     BOGO_SORT = 0b10000,
     DOUBLE_SELECTION_SORT = 0b100000,
+    ALL_SORTING_ALGO = 0b111111,
 };
 
 template <typename Num>
