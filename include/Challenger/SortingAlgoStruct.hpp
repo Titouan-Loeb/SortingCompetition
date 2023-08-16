@@ -10,14 +10,14 @@ using AlgoPrototypeWithTimeout = std::vector<Num> (*)(const std::vector<Num>&, c
 template <typename Num>
 using AlgoPrototype = std::vector<Num> (*)(const std::vector<Num>&);
 
-enum class SortAlgoFlags
+enum class SortAlgoFlags : size_t
 {
     BUBBLE_SORT = 0b1,
     INSERTION_SORT = 0b10,
     SELECTION_SORT = 0b100,
     COCKTAIL_SHAKER_SORT = 0b1000,
     BOGO_SORT = 0b10000,
-    MAX = 0b100000,
+    DOUBLE_SELECTION_SORT = 0b100000,
 };
 
 template <typename Num>
@@ -28,4 +28,4 @@ struct AlgoInfoStruct
     AlgoPrototypeWithTimeout<Num> funcTimeout;
 };
 
-#endif // ISORTINGALGO_HPP
+#endif // SORTINGALGOSTRUCT_HPP

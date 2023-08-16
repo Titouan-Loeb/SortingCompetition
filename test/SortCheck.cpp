@@ -4,6 +4,7 @@
 #include "SelectionSort.hpp"
 #include "CocktailShakerSort.hpp"
 #include "BogoSort.hpp"
+#include "DoubleSelectionSort.hpp"
 #include "CheckArrays.hpp"
 
 bool compareLists(std::vector<int> array, std::vector<int> arraySorted)
@@ -68,4 +69,16 @@ Test(TestingAlgo, CocktailShakerSort)
 Test(TestingAlgo, BogoSort)
 {
     cr_expect(compareLists(BogoSort<int>::sort(stupid), stupid_sorted), "stupid: arrays are not equal");
+}
+
+Test(TestingAlgo, DoubleSelectionSort)
+{
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(stupid), stupid_sorted), "DoubleSelectionSort stupid: arrays are not equal");
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(easy1), easy1_sorted), "DoubleSelectionSort easy1: arrays are not equal");
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(easy2), easy2_sorted), "DoubleSelectionSort easy2: arrays are not equal");
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(medium1), medium1_sorted), "DoubleSelectionSort medium1: arrays are not equal");
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(medium2), medium2_sorted), "DoubleSelectionSort medium2: arrays are not equal");
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(hard1), hard1_sorted), "DoubleSelectionSort hard1: arrays are not equal");
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(hard2), hard2_sorted), "DoubleSelectionSort hard2: arrays are not equal");
+    cr_expect(compareLists(DoubleSelectionSort<int>::sort(veryHard), veryHard_sorted), "DoubleSelectionSort veryHard: arrays are not equal");
 }
