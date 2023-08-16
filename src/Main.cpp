@@ -4,11 +4,19 @@
 #include "Challenger.hpp"
 #include "MassiveArray.hpp"
 
-
+#include "DoubleSelectionSort.hpp"
 
 void printUsage(const std::string &binName)
 {
     std::cout << "Usage: " << binName << " [-t timeout(ms)]" << std::endl;
+}
+
+void printArray(const std::vector<int> array)
+{
+    for (size_t i = 0; i < array.size(); i++) {
+        std::cout << array[i] << " < ";
+    }
+    std::cout << std::endl;
 }
 
 int main(int argc, char** argv)
@@ -31,3 +39,12 @@ int main(int argc, char** argv)
     printUsage(argv[0]);
     return (1);
 }
+
+// int main()
+// {
+//     std::vector<int> stupid = {4, 1 , 3, 2};
+//     std::vector<int> result = DoubleSelectionSort<int>::sort(stupid);
+//     printArray(result);
+
+//     Challenger<int> chal(massiveArray)
+// }

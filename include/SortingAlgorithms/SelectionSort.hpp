@@ -57,7 +57,8 @@ size_t SelectionSort<Num>::findMinIndex()
 {
     Num min = this->_array[this->_currentIndex];
     size_t minIndex = this->_currentIndex;
-    for (size_t i = minIndex + 1; i < this->_array.size(); i++) {
+
+    for (size_t i = this->_currentIndex + 1; i < this->_array.size(); i++) {
         if (this->_array[i] < min) {
             min = this->_array[i];
             minIndex = i;
