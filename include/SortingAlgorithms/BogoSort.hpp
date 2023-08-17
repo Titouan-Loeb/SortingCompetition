@@ -31,6 +31,10 @@ public:
     };
 };
 
+// ------------------------------
+// IMPLEMENTATION
+// ------------------------------
+
 template <typename Num>
 std::vector<Num> BogoSort<Num>::run(const std::atomic<bool> &timeout)
 {

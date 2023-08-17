@@ -18,7 +18,8 @@ enum class SortAlgoFlags : uint32_t
     COCKTAIL_SHAKER_SORT = 0b1000,
     BOGO_SORT = 0b10000,
     DOUBLE_SELECTION_SORT = 0b100000,
-    ALL_SORTING_ALGO = 0b111111,
+    BINARY_INSERTION_SORT = 0b1000000,
+    ALL_SORTING_ALGO = 0b1111111,
 };
 
 template <typename Num>
