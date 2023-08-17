@@ -6,6 +6,7 @@
 #include "BogoSort.hpp"
 #include "DoubleSelectionSort.hpp"
 #include "BinaryInsertionSort.hpp"
+#include "MergeSort.hpp"
 #include "CheckArrays.hpp"
 
 bool compareLists(std::vector<int> array, std::vector<int> arraySorted)
@@ -94,4 +95,16 @@ Test(TestingAlgo, BinaryInsertionSort)
     cr_expect(compareLists(BinaryInsertionSort<int>::sort(hard1), hard1_sorted), "BinaryInsertionSort hard1: arrays are not equal");
     cr_expect(compareLists(BinaryInsertionSort<int>::sort(hard2), hard2_sorted), "BinaryInsertionSort hard2: arrays are not equal");
     cr_expect(compareLists(BinaryInsertionSort<int>::sort(veryHard), veryHard_sorted), "BinaryInsertionSort veryHard: arrays are not equal");
+}
+
+Test(TestingAlgo, MergeSort)
+{
+    cr_expect(compareLists(MergeSort<int>::sort(stupid), stupid_sorted), "MergeSort stupid: arrays are not equal");
+    cr_expect(compareLists(MergeSort<int>::sort(easy1), easy1_sorted), "MergeSort easy1: arrays are not equal");
+    cr_expect(compareLists(MergeSort<int>::sort(easy2), easy2_sorted), "MergeSort easy2: arrays are not equal");
+    cr_expect(compareLists(MergeSort<int>::sort(medium1), medium1_sorted), "MergeSort medium1: arrays are not equal");
+    cr_expect(compareLists(MergeSort<int>::sort(medium2), medium2_sorted), "MergeSort medium2: arrays are not equal");
+    cr_expect(compareLists(MergeSort<int>::sort(hard1), hard1_sorted), "MergeSort hard1: arrays are not equal");
+    cr_expect(compareLists(MergeSort<int>::sort(hard2), hard2_sorted), "MergeSort hard2: arrays are not equal");
+    cr_expect(compareLists(MergeSort<int>::sort(veryHard), veryHard_sorted), "MergeSort veryHard: arrays are not equal");
 }
