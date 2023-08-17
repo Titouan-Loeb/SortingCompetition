@@ -145,7 +145,7 @@ fclean: clean
 # Run the program
 run:
 	@echo "$(CYAN)Running$(RESET) $(GREEN)$(TARGET)$(RESET)"
-	@$(TARGET) -t 5000
+	@$(TARGET) -t 10000
 
 # Run in debug mode
 run-debug:
@@ -155,7 +155,7 @@ run-debug:
 # Run in release mode
 run-release:
 	@echo "$(CYAN)Running --release$(RESET) $(GREEN)$(TARGET_RELEASE)$(RESET)"
-	@$(TARGET_RELEASE)
+	@$(TARGET_RELEASE) -t 10000
 
 # Run tests
 run-test:

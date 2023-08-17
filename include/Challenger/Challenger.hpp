@@ -12,6 +12,7 @@
 #include "CocktailShakerSort.hpp"
 #include "BogoSort.hpp"
 #include "DoubleSelectionSort.hpp"
+#include "BinaryInsertionSort.hpp"
 
 
 template <typename Num>
@@ -56,6 +57,7 @@ Challenger<Num>::Challenger(const std::vector<Num> &competitionArray)
         SortAlgoFlags::COCKTAIL_SHAKER_SORT,
         SortAlgoFlags::BOGO_SORT,
         SortAlgoFlags::DOUBLE_SELECTION_SORT,
+        SortAlgoFlags::BINARY_INSERTION_SORT,
     };
 
     this->_algoStructList.insert(std::make_pair(SortAlgoFlags::BUBBLE_SORT, AlgoInfoStruct<Num>{SortAlgoFlags::BUBBLE_SORT, "BubbleSort", &BubbleSort<Num>::sortWithTimeout}));
@@ -64,6 +66,7 @@ Challenger<Num>::Challenger(const std::vector<Num> &competitionArray)
     this->_algoStructList.insert(std::make_pair(SortAlgoFlags::COCKTAIL_SHAKER_SORT, AlgoInfoStruct<Num>{SortAlgoFlags::COCKTAIL_SHAKER_SORT, "CocktailShakerSort", &CocktailShakerSort<Num>::sortWithTimeout}));
     this->_algoStructList.insert(std::make_pair(SortAlgoFlags::BOGO_SORT, AlgoInfoStruct<Num>{SortAlgoFlags::BOGO_SORT, "BogoSort", &BogoSort<Num>::sortWithTimeout}));
     this->_algoStructList.insert(std::make_pair(SortAlgoFlags::DOUBLE_SELECTION_SORT, AlgoInfoStruct<Num>{SortAlgoFlags::DOUBLE_SELECTION_SORT, "DoubleSelectionSort", &DoubleSelectionSort<Num>::sortWithTimeout}));
+    this->_algoStructList.insert(std::make_pair(SortAlgoFlags::BINARY_INSERTION_SORT, AlgoInfoStruct<Num>{SortAlgoFlags::BINARY_INSERTION_SORT, "BinaryInsertionSort", &BinaryInsertionSort<Num>::sortWithTimeout}));
     this->_competitionArray = competitionArray;
 }
 

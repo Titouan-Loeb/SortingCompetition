@@ -42,6 +42,6 @@ int main(int argc, char** argv)
 
 // int main()
 // {
-//     Challenger<int> chal(massiveArray);
-//     chal.challengeSpecificWithTimeout((uint32_t)SortAlgoFlags::DOUBLE_SELECTION_SORT | (uint32_t)SortAlgoFlags::SELECTION_SORT, 500);
+//     Challenger<int> chal(arrayEasy1);
+//     chal.challengeSpecific((uint32_t)SortAlgoFlags::BINARY_INSERTION_SORT);
 // }
