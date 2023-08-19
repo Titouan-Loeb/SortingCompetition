@@ -44,7 +44,7 @@ template <typename Num>
 std::vector<Num> MergeSort<Num>::splitAndSort(const std::atomic<bool> &timeout, const std::vector<Num> &arrayToSort)
 {
     if (timeout.load())
-        return std::vector<Num>();
+        throw TimeoutException();
     if (this->isSorted(arrayToSort))
         return (arrayToSort);
 
@@ -54,13 +54,7 @@ std::vector<Num> MergeSort<Num>::splitAndSort(const std::atomic<bool> &timeout, 
     std::vector<Num> rightHalf(arrayToSort.begin() + arrayToSort.size() / 2, arrayToSort.end());
     
     leftHalf = splitAndSort(timeout, leftHalf);
-    if (timeout.load())
-        return std::vector<Num>();
-        
     rightHalf = splitAndSort(timeout, rightHalf);
-    
-    if (timeout.load())
-        return std::vector<Num>();
     
     return (merge(leftHalf, rightHalf));
 }

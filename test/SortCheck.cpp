@@ -1,4 +1,6 @@
 #include <criterion/criterion.h>
+
+#include "CheckArrays.hpp"
 #include "BubbleSort.hpp"
 #include "InsertionSort.hpp"
 #include "SelectionSort.hpp"
@@ -7,7 +9,7 @@
 #include "DoubleSelectionSort.hpp"
 #include "BinaryInsertionSort.hpp"
 #include "MergeSort.hpp"
-#include "CheckArrays.hpp"
+#include "QuickSort.hpp"    
 
 bool compareLists(std::vector<int> array, std::vector<int> arraySorted)
 {
@@ -107,4 +109,16 @@ Test(TestingAlgo, MergeSort)
     cr_expect(compareLists(MergeSort<int>::sort(hard1), hard1_sorted), "MergeSort hard1: arrays are not equal");
     cr_expect(compareLists(MergeSort<int>::sort(hard2), hard2_sorted), "MergeSort hard2: arrays are not equal");
     cr_expect(compareLists(MergeSort<int>::sort(veryHard), veryHard_sorted), "MergeSort veryHard: arrays are not equal");
+}
+
+Test(TestingAlgo, QuickSort)
+{
+    cr_expect(compareLists(QuickSort<int>::sort(stupid), stupid_sorted), "QuickSort stupid: arrays are not equal");
+    cr_expect(compareLists(QuickSort<int>::sort(easy1), easy1_sorted), "QuickSort easy1: arrays are not equal");
+    cr_expect(compareLists(QuickSort<int>::sort(easy2), easy2_sorted), "QuickSort easy2: arrays are not equal");
+    cr_expect(compareLists(QuickSort<int>::sort(medium1), medium1_sorted), "QuickSort medium1: arrays are not equal");
+    cr_expect(compareLists(QuickSort<int>::sort(medium2), medium2_sorted), "QuickSort medium2: arrays are not equal");
+    cr_expect(compareLists(QuickSort<int>::sort(hard1), hard1_sorted), "QuickSort hard1: arrays are not equal");
+    cr_expect(compareLists(QuickSort<int>::sort(hard2), hard2_sorted), "QuickSort hard2: arrays are not equal");
+    cr_expect(compareLists(QuickSort<int>::sort(veryHard), veryHard_sorted), "QuickSort veryHard: arrays are not equal");
 }

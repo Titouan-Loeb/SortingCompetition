@@ -42,6 +42,6 @@ int main(int argc, char** argv)
 
 // int main()
 // {
-//     Challenger<int> chal(arrayEasy1);
-//     chal.challengeSpecific((uint32_t)SortAlgoFlags::MERGE_SORT);
+//     Challenger<int> chal(arrayEasy2);
+//     chal.challengeSpecific((uint32_t)SortAlgoFlags::QUICK_SORT);
 // }
