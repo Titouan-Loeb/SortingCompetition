@@ -80,32 +80,6 @@ void QuickSort<Num>::pivotAndSort(const std::atomic<bool> &timeout, const size_t
     std::swap(this->_array[pivotNewIdx], this->_array[last]);
     pivotAndSort(timeout, first, pivotNewIdx - 1);
     pivotAndSort(timeout, pivotNewIdx + 1, last);
-
-    // Num pivot = findPivot(first, last);
-    // size_t leftIdx = first;
-    // size_t rightIdx = last - 1;
-
-    // //pivot elements
-    // while (leftIdx < rightIdx) {
-    //     while (leftIdx < rightIdx && this->_array[leftIdx] <= pivot && leftIdx < last - 1)
-    //         leftIdx++;
-    //     while (leftIdx < rightIdx && this->_array[rightIdx] > pivot && rightIdx > first)
-    //         rightIdx--;
-    //     if (leftIdx >= rightIdx)
-    //         break;
-    //     std::swap(this->_array[leftIdx++], this->_array[rightIdx--]);
-    // }
-    // size_t pivotNewIdx = leftIdx;
-    // if (this->_array[leftIdx] <= pivot && leftIdx < last - 1)
-    //     pivotNewIdx = leftIdx + 1;
-    // std::swap(this->_array[last], this->_array[pivotNewIdx]);
-    // // sort the two parts
-    // pivotAndSort(timeout, first, pivotNewIdx - 1);
-    // if (timeout.load())
-    //     throw TimeoutException();
-    // pivotAndSort(timeout, pivotNewIdx + 1, last);
-    // if (timeout.load())
-    //     throw TimeoutException();
 }
 
 
